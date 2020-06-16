@@ -5,7 +5,14 @@ import {ListItem} from "react-native-elements";
 function Menu(props) {
     const renderMenuItem= ({item, index})=> {
         return (
-            <ListItem key={index} title={item.name} subtitle={item.description} leftAvatar={{source: require('../assets/images/elaicheesecake.png')}} />
+            <ListItem
+                key={index}
+                title={item.name}
+                subtitle={item.description}
+                hideChevron={true}
+                onPress={() => props.onPress(item.id)}
+                leftAvatar={{ source: require('../assets/images/uthappizza.png')}}
+            />
         );
     };
 
