@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, ScrollView, Switch, Button, Picker} from "react-native";
+import {Text, View, StyleSheet, ScrollView, Switch, Button, Picker, Modal} from "react-native";
 import DatePicker from "react-native-datepicker";
 
 
@@ -10,18 +10,27 @@ class Reservation extends Component {
         this.state= {
             guest: 1,
             smoking: false,
-            date:''
+            date:'',
+            isModalOpen: false
         };
 
     }
 
-    handleReservation () {
-        console.log(JSON.stringify(this.state));
+    toggleModal() {
+        this.setState({isModalOpen: !this.state.isModalOpen})
+    }
+
+    resetForm() {
         this.setState({
             guest:1,
             smoking: false,
             date:''
         })
+    }
+
+    handleReservation () {
+        console.log(JSON.stringify(this.state));
+        this.toggleModal();
     }
 
     render() {
@@ -56,6 +65,16 @@ class Reservation extends Component {
                 <View style={styles.formRow}>
                     <Button title={'Reserve'} color={'#512DA8'} onPress={()=> this.handleReservation()} accessibilityLabel={'Ghangor PAAP'}/>
                 </View>
+
+                <Modal animationType={'slide'} transparent={false} visible={this.state.isModalOpen} onDismiss={()=> {this.toggleModal();this.resetForm()}} onRequestClose={()=> {this.toggleModal();this.resetForm()}} >
+                    <View style={styles.modal}>
+                        <Text style={styles.modalTitle}>Your Reservation</Text>
+                        <Text style={styles.modalText}>Number Of Guests: {this.state.guest}</Text>
+                        <Text style={styles.modalText}>{this.state.smoking? 'Smoking area': 'Non-Smoking'}</Text>
+                        <Text style={styles.modalText}>When: {this.state.date}</Text>
+                        <Button title={'Close'} onPress={()=> {this.toggleModal();this.resetForm()}} color={'#512DA8'}/>
+                    </View>
+                </Modal>
             </ScrollView>
         )
     }
@@ -77,7 +96,26 @@ const styles= StyleSheet.create({
 
    formItem: {
      flex:1
-   }
+   },
+
+   modal: {
+       justifyContent: 'center',
+       margin: 20
+   },
+
+   modalTitle: {
+       fontSize: 24,
+       fontWeight: 'bold',
+       backgroundColor: '#512DA8',
+       textAlign: 'center',
+       color: 'white',
+       marginBottom: 20
+   },
+
+    modalText: {
+        fontSize: 18,
+        margin: 10
+    }
 });
 
 export default Reservation;
