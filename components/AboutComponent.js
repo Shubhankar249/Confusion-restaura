@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {ScrollView, Text, FlatList, View, SafeAreaView} from "react-native";
 import {Card, ListItem} from "react-native-elements";
+import {Loading} from './LoadingComponent';
 
 // For redux
 import {connect} from 'react-redux';
@@ -29,6 +30,28 @@ class AboutUs extends Component{
               <ListItem key={index} title={item.name} subtitle={item.description} leftAvatar={{source: {uri:baseUrl+item.image} }}/>
           );
         };
+
+        if (this.props.leaders.isLoading) {
+            return (
+                <ScrollView>
+                    <OurHistory/>
+                    <Card  title="Corporate Leadership">
+                        <Loading/>
+                    </Card>
+                </ScrollView>
+            )
+        }
+
+        if (this.props.leaders.errMess) {
+            return (
+                <ScrollView>
+                    <OurHistory/>
+                    <Card  title="Corporate Leadership">
+                        <Text>{this.props.leaders.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            )
+        }
 
         return(
             <ScrollView>

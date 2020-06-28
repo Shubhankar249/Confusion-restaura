@@ -15,10 +15,6 @@ import {fetchLeaders, fetchDishes, fetchComments, fetchPromos}  from "../redux/A
 
 const mapStateToProps = state => {
     return {
-        dishes: state.dishes,
-        comments: state.comments,
-        promotions: state.promotions,
-        leaders: state.leaders
     }
 };
 
