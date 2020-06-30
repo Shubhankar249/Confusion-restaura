@@ -149,6 +149,11 @@ export const addFavourite= (dishId) =>({
     payload: dishId
 });
 
+export const deleteFavourite= (dishId) => ({
+   type:ActionTypes.DELETE_FAVOURITE,
+   payload: dishId
+});
+
 export const postComment = (dishId, rating, author, comment) => dispatch => {
     let co = {dishId: dishId, rating:rating, author:author, comment:comment, date: new Date().toISOString()};
     return dispatch(addComment(co));
