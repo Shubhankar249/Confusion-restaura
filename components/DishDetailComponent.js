@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useRef} from "react";
 import {View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder} from "react-native";
 import {Card, Icon, Rating, Input} from "react-native-elements";
 import * as Animatable from 'react-native-animatable';
@@ -25,6 +25,8 @@ const mapDispatchToProps= (dispatch) =>({
 function RenderDish(props) {
     const dish=props.dish;
 
+    const handleViewRef= useRef(null);
+
     const recognizeDrag = ({moveX, moveY, dx, dy})=>{
         // Right to left drag
         return dx<-200;
@@ -33,6 +35,10 @@ function RenderDish(props) {
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder:(e, gestureState) => {
             return true;
+        },
+        onPanResponderGrant: ()=> {
+            handleViewRef.current.rubberBand(1000)
+                .then(endState => console.log(endState.finished ? 'finished' : 'cancelled'));
         },
         onPanResponderEnd: (e, gestureState) => {
             if (recognizeDrag(gestureState)) {
@@ -59,7 +65,7 @@ function RenderDish(props) {
 
     if (dish) {
         return (
-            <Animatable.View animation="fadeInDown" duration={2000} delay={1000} {...panResponder.panHandlers}>
+            <Animatable.View animation="fadeInDown" duration={2000} delay={1000} {...panResponder.panHandlers} ref={handleViewRef}>
                 <Card featuredTitle={dish.name} image={{uri: baseUrl+ dish.image}}>
                     <Text style={{margin: 10}}>
                         {dish.description}
