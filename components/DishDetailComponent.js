@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {View, Text, ScrollView, FlatList, Modal, StyleSheet, Button} from "react-native";
+import {View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder} from "react-native";
 import {Card, Icon, Rating, Input} from "react-native-elements";
+import * as Animatable from 'react-native-animatable';
 
 import {postFavourite, postComment} from "../redux/ActionCreators";
 
@@ -23,22 +24,56 @@ const mapDispatchToProps= (dispatch) =>({
 
 function RenderDish(props) {
     const dish=props.dish;
+
+    const recognizeDrag = ({moveX, moveY, dx, dy})=>{
+        // Right to left drag
+        return dx<-200;
+    };
+
+    const panResponder = PanResponder.create({
+        onStartShouldSetPanResponder:(e, gestureState) => {
+            return true;
+        },
+        onPanResponderEnd: (e, gestureState) => {
+            if (recognizeDrag(gestureState)) {
+                Alert.alert(
+                    'Add to favourites?',
+                    'Are you sure you want to add' + dish.name + 'to favourites ?',
+                    [
+                        {
+                            text:'Cancel',
+                            onPress: ()=> console.log('Cancel Pressed'),
+                            style: "cancel"
+                        },
+                        {
+                            text: 'OK',
+                            onPress: ()=> props.favourite ? console.log('Already Favourite') : props.onPress()
+                        }
+                    ],
+                    {cancelable:false}
+                )
+            }
+            return true;
+        }
+    });
+
     if (dish) {
         return (
-            <Card featuredTitle={dish.name} image={{uri: baseUrl+ dish.image}}>
-                <Text style={{margin: 10}}>
-                    {dish.description}
-                </Text>
-                <View style={styles.icons}>
-                    <Icon style={{flex:1}} name={props.favourite ? 'heart' : 'heart-o'} raised reverse type='font-awesome' color='#f50'
-                        onPress={()=> props.favourite ? console.log('Already Favourite') : props.onPress()}
-                    />
-                    <Icon style={{flex:1}} name={'pencil'} raised reverse type='font-awesome' color='#512DA8'
-                        onPress={()=> props.toggleModal()}
-                    />
-                </View>
-            </Card>
-
+            <Animatable.View animation="fadeInDown" duration={2000} delay={1000} {...panResponder.panHandlers}>
+                <Card featuredTitle={dish.name} image={{uri: baseUrl+ dish.image}}>
+                    <Text style={{margin: 10}}>
+                        {dish.description}
+                    </Text>
+                    <View style={styles.icons}>
+                        <Icon style={{flex:1}} name={props.favourite ? 'heart' : 'heart-o'} raised reverse type='font-awesome' color='#f50'
+                            onPress={()=> props.favourite ? console.log('Already Favourite') : props.onPress()}
+                        />
+                        <Icon style={{flex:1}} name={'pencil'} raised reverse type='font-awesome' color='#512DA8'
+                            onPress={()=> props.toggleModal()}
+                        />
+                    </View>
+                </Card>
+            </Animatable.View>
         );
     }
     else {
@@ -60,9 +95,11 @@ function RenderComments(props) {
 
 
     return (
-        <Card title="Comments">
-            <FlatList data={comments} renderItem={RenderCommentItem} keyExtractor={item => item.id.toString()}/>
-        </Card>
+        <Animatable.View animation="fadeInUp" duration={2000} delay={1000}>
+            <Card title="Comments">
+                <FlatList data={comments} renderItem={RenderCommentItem} keyExtractor={item => item.id.toString()}/>
+            </Card>
+        </Animatable.View>
     )
 }
 

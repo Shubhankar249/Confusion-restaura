@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {ScrollView, Text, FlatList, View, SafeAreaView} from "react-native";
 import {Card, ListItem} from "react-native-elements";
 import {Loading} from './LoadingComponent';
+import * as Animatable from 'react-native-animatable';
 
 // For redux
 import {connect} from 'react-redux';
@@ -55,10 +56,12 @@ class AboutUs extends Component{
 
         return(
             <ScrollView>
-                <OurHistory/>
-                <Card  title="Corporate Leadership">
-                    <FlatList nestedScrollEnabled={false} data={this.props.leaders.leaders} renderItem={renderLeaders} keyExtractor={item => item.id.toString()}/>
-                </Card>
+                <Animatable.View animation={'fadeInDown'} duration={2000} delay={1000}>
+                    <OurHistory/>
+                    <Card  title="Corporate Leadership">
+                        <FlatList nestedScrollEnabled={false} data={this.props.leaders.leaders} renderItem={renderLeaders} keyExtractor={item => item.id.toString()}/>
+                    </Card>
+                </Animatable.View>
             </ScrollView>
         );
     }
