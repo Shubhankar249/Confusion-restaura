@@ -7,6 +7,7 @@ import Contact from "./ContactComponent";
 import AboutUs from "./AboutComponent";
 import Reservation from "./ReservationComponent";
 import Favourites from "./FavouriteComponent";
+import Login from "./LoginComponent";
 
 import {View, Platform, Image, StyleSheet, ScrollView, Text} from "react-native";
 import {NavigationContainer} from "@react-navigation/native";
@@ -118,6 +119,21 @@ function FavouriteNavigator() {
     )
 }
 
+function LoginNavigator() {
+    return(
+        <Stack.Navigator screenOptions={{
+            headerTintColor:'#fff',
+            headerStyle: {backgroundColor: '#512DA8'},
+            headerTitleStyle: {color: "#fff"}
+        }}>
+            <Stack.Screen name={'Login'} component={Login} options={({ navigation}) => ({
+                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+            })}/>
+        </Stack.Navigator>
+    )
+}
+
+
 const CustomDrawerContentComponent= (props) => (
     <ScrollView>
         <View style={styles.drawerHeader}>
@@ -137,6 +153,9 @@ function MainNavigator() {
         <Drawer.Navigator initialRouteName="Home" drawerStyle={{backgroundColor:'#D1C4E9'}}
                           drawerContent={props => <CustomDrawerContentComponent {...props}/>}>
 
+            <Drawer.Screen name="Login" component={LoginNavigator} options={{
+                drawerIcon: ({color})=> <Icon name={'sign-in'} size={24} type='font-awesome' color={color}/>
+            }}/>
             <Drawer.Screen name="Home" component={HomeNavigator} options={{
                 drawerIcon: ({color})=> <Icon name={'home'} size={24} type='font-awesome' color={color}/>
             }}/>
