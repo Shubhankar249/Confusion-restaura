@@ -1,5 +1,5 @@
 import React, {Component, useRef} from "react";
-import {View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder} from "react-native";
+import {View, Text, ScrollView, FlatList, Modal, StyleSheet, Button, Alert, PanResponder, Share} from "react-native";
 import {Card, Icon, Rating, Input} from "react-native-elements";
 import * as Animatable from 'react-native-animatable';
 
@@ -69,6 +69,16 @@ function RenderDish(props) {
         }
     });
 
+    const shareDish= (title, msg, url)=> {
+        Share.share({
+            title: title,
+            message: msg + 'Kaala Kauaa' + url,
+            url: url
+        }, {
+            dialogTitle: 'Faila Do' + title
+        })
+    };
+
     if (dish) {
         return (
             <Animatable.View animation="fadeInDown" duration={2000} delay={1000} {...panResponder.panHandlers} ref={handleViewRef}>
@@ -82,6 +92,9 @@ function RenderDish(props) {
                         />
                         <Icon style={{flex:1}} name={'pencil'} raised reverse type='font-awesome' color='#512DA8'
                             onPress={()=> props.toggleModal()}
+                        />
+                        <Icon style={{flex:1}} name={'share'} raised reverse type='font-awesome' color='#51D2A8'
+                            onPress={() => shareDish(dish.name, dish.description, baseUrl+ dish.image)}
                         />
                     </View>
                 </Card>
