@@ -43,11 +43,9 @@ class Login extends Component{
             <View style={styles.container}>
                 <Input placeholder={'Username'} leftIcon={{type:'font-awesome', name:'user-o'}}
                        onChangeText={(username)=> this.setState({username})} value={this.state.username}
-                       inputContainerStyle={styles.formInput}
                 />
                 <Input placeholder={'Password'} leftIcon={{type:'font-awesome', name:'key'}}
                        onChangeText={(password)=> this.setState({password})} value={this.state.password}
-                       inputContainerStyle={styles.formInput}
                 />
 
                 <CheckBox checked={this.state.remember} title={'Remember Me'} center

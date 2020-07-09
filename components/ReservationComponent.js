@@ -1,7 +1,10 @@
 import React, {Component} from "react";
-import {Text, View, StyleSheet, Switch, Button, Picker, Modal, Alert} from "react-native";
+import {Text, View, StyleSheet, Switch, Button, Picker, Modal, Alert, Platform} from "react-native";
 import DatePicker from "react-native-datepicker";
 import * as Animatable from 'react-native-animatable';
+import * as Permissions from 'expo-permissions';
+import {Notifications} from "expo";
+import {max, min} from "react-native-reanimated";
 
 
 class Reservation extends Component {
@@ -22,6 +25,41 @@ class Reservation extends Component {
             smoking: false,
             date:''
         })
+    }
+
+    async obtainNotificationPermission() {
+        let permission= await Permissions.getAsync(Permissions.USER_FACING_NOTIFICATIONS);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.USER_FACING_NOTIFICATIONS);
+
+            if (permission.status !== 'granted') Alert.alert('Permission not granted for notifications!');
+        }
+        return permission;
+    }
+
+
+async presentLocalNotification(date) {
+        await this.obtainNotificationPermission();
+
+        Notifications.presentLocalNotificationAsync({
+            title: 'Your Reservation',
+            body: `Reservation for ${date} requested`,
+            ios: {
+                sound:true,
+            },
+            android: {
+                channelId:'hello',
+                color:'#512DA8'
+            }
+        });
+        if (Platform.OS==='android') {
+            Notifications.createChannelAndroidAsync('hello', {
+                name: 'hello',
+                sound: true,
+                vibrate: [0, 250, 250, 250],
+                priority:max
+            });
+        }
     }
 
     render() {
@@ -65,7 +103,7 @@ class Reservation extends Component {
                             },
                             {
                                 text:'OK',
-                                onPress: ()=>this.resetForm()
+                                onPress: ()=>{this.presentLocalNotification(this.state.date);this.resetForm()}
                             }
                         ],
                         {cancelable:false}

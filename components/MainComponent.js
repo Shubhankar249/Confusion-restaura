@@ -42,7 +42,7 @@ function MenuNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name="Menu" component={Menu}  options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
             <Stack.Screen name="DishDetail" component={DishDetail} />
         </Stack.Navigator>
@@ -57,7 +57,7 @@ function HomeNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'Home'} component={Home} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
@@ -71,7 +71,7 @@ function AboutNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'About Us'} component={AboutUs} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
@@ -85,7 +85,7 @@ function ContactNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'Contact Us'} component={Contact} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
@@ -99,7 +99,7 @@ function ReservationNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'Reserve a Table'} component={Reservation} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
@@ -113,7 +113,7 @@ function FavouriteNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'Favourites'} component={Favourites} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
@@ -127,7 +127,7 @@ function LoginNavigator() {
             headerTitleStyle: {color: "#fff"}
         }}>
             <Stack.Screen name={'Login'} component={Login} options={({ navigation}) => ({
-                headerLeft: ()=> <Icon name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
+                headerLeft: ()=> <Icon iconStyle={{marginLeft: 10}} name='menu' size={24} color='white' onPress={()=> navigation.toggleDrawer()}/>,
             })}/>
         </Stack.Navigator>
     )
