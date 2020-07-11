@@ -1170,6 +1170,14 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/picker/-/picker-1.6.5.tgz#9489fdb6d0b4b5877491101e0c3185ea9511d1aa"
   integrity sha512-mwt0sBaFdURJWkq6wFf2BrYh7fzB1CKK4/gx20zmDYDmahvk3CVUQVlkINDDyXE9m0lYZ9V8rBZBBAJy9W3GkQ==
 
+"@react-navigation/bottom-tabs@^5.7.0":
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.7.0.tgz#2c61abe9d08fc4a4c51294d7738dd54d26eef011"
+  integrity sha512-MNtwahAC+fXkRlRLYMy5ErjhaRGYzOsz7O5O9znIRFQb2xf/DRUhvUF6/IPYBsG09J4m3Ztnnfs+PG10vE+zlA==
+  dependencies:
+    color "^3.1.2"
+    react-native-iphone-x-helper "^1.2.1"
+
 "@react-navigation/core@^3.7.6":
   version "3.7.6"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-3.7.6.tgz#e0244fcdc22937825b252197f70308bbe5709c58"
@@ -2440,6 +2448,13 @@ expo-font@~8.1.0:
   dependencies:
     fbjs "1.0.0"
     fontfaceobserver "^2.1.0"
+
+expo-image-picker@~8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.1.0.tgz#014e4f4aaef4c1daf56d13de27a41ef78660aa15"
+  integrity sha512-UMHiDGiflg47A/nfnmJ1gYdB/sEoxB4STVGgMeLNYpUkVR59kUWqsGTyVEtSywNCLPuXPZVB9NaRUd81Rbs7lA==
+  dependencies:
+    expo-permissions "~8.1.0"
 
 expo-keep-awake@~8.1.0:
   version "8.1.0"
@@ -4504,6 +4519,11 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-lifecycles-compat@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
+  integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
 react-native-animatable@^1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
@@ -4596,6 +4616,11 @@ react-native-swipeout@^2.3.6:
     prop-types "^15.5.10"
     react-tween-state "^0.1.5"
 
+react-native-tab-view@^2.11.0:
+  version "2.14.4"
+  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.14.4.tgz#740007e62c8723c6813b8c8a05caaaf82c816620"
+  integrity sha512-oqkCflPFuZwDTbyY2WaN0377akSsmcttuYACR9LT7htZfO/tKR2Z/ynj1tbv2cz2esGuVICoga9cetN1lPimog==
+
 react-native-view-shot@3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
@@ -4658,6 +4683,16 @@ react-navigation-stack@^2.7.0:
   dependencies:
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
+
+react-navigation-tabs@^2.9.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-2.9.0.tgz#37407106f33367ff0ef3e5bb128d03f2721a50ef"
+  integrity sha512-+C9wyPtgxpEedhs1aX8pwtM7gJtpDMN3wPwq0jNkmONaurhb3hvE+mt3D7CLtX+zwxmMhcrPxSTSkynORKNn8g==
+  dependencies:
+    hoist-non-react-statics "^3.3.2"
+    react-lifecycles-compat "^3.0.4"
+    react-native-safe-area-view "^0.14.9"
+    react-native-tab-view "^2.11.0"
 
 react-navigation@^4.3.9:
   version "4.3.9"
