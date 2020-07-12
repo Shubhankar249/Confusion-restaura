@@ -6,6 +6,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {baseUrl} from "../shared/baseUrl";
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as Animatable from 'react-native-animatable';
 
 
@@ -142,6 +143,15 @@ class RegisterTab extends Component{
                 .catch((error) => console.log('Could not save user info', error));
     }
 
+    processImage= async (imageUri)=> {
+        let processedImg = await ImageManipulator.manipulateAsync(
+            imageUri,
+            [{resize:{width: 400}}],
+            {format:ImageManipulator.SaveFormat.PNG});
+        console.log(processedImg);
+        this.setState({imageUrl:processedImg.uri});
+    };
+
     getImageFromCamera= async () => {
         const cameraPermission= await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission= await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -155,7 +165,7 @@ class RegisterTab extends Component{
 
             if (!capturedImage.cancelled) {
                 console.log(capturedImage);
-                this.setState({imageUrl: capturedImage.uri});
+                this.processImage( capturedImage.uri);
             }
         }
     };
@@ -256,8 +266,8 @@ const styles= StyleSheet.create({
     },
     image:{
         margin:10,
-        width:68,
-        height:51
+        width:80,
+        height:60
     }
 });
 
