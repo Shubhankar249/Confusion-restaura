@@ -1,22 +1,34 @@
 import * as SecureStore from 'expo-secure-store';
 import React, {Component} from "react";
-import {View, StyleSheet, Text, Image, ScrollView} from "react-native";
+import {View, StyleSheet, Text, Image, ScrollView, PanResponder} from "react-native";
 import {Input, CheckBox, Icon, Button} from "react-native-elements";
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {baseUrl} from "../shared/baseUrl";
-import {NavigationContainer} from "@react-navigation/native";
+import * as Animatable from 'react-native-animatable';
+
 
 
 class LoginTab extends Component{
     constructor(props) {
         super(props);
 
+        const panResponder= PanResponder.create({
+            onStartShouldSetPanResponder:(e, gestureState)=>{return true;},
+            onPanResponderGrant:()=> {console.log('Started')},
+            onPanResponderEnd: (e, gestureState)=>{
+                if (gestureState.dx<-60) {
+                    props.navigation.navigate('Register');
+                }
+            }
+        }) ;
+
         this.state={
             username:'',
             password:'',
-            remember:false
+            remember:false,
+            panResponder:panResponder
         }
     }
 
@@ -45,7 +57,7 @@ class LoginTab extends Component{
 
     render() {
         return (
-            <View style={styles.container}>
+            <Animatable.View animation={'slideInRight'} delay={100} duration={1500} style={styles.container} {...this.state.panResponder.panHandlers}>
                 <Input placeholder={'Username'} leftIcon={{type:'font-awesome', name:'user-o'}}
                        onChangeText={(username)=> this.setState({username})} value={this.state.username}
                 />
@@ -93,15 +105,24 @@ class LoginTab extends Component{
                         backgroundColor: null
                     }}
                     /></View>
-            </View>
+            </Animatable.View>
         )
     }
 }
 
-
 class RegisterTab extends Component{
     constructor(props) {
         super(props);
+
+        const panResponder= PanResponder.create({
+            onStartShouldSetPanResponder:(e, gestureState)=>{return true;},
+            onPanResponderGrant:()=> {console.log('Started')},
+            onPanResponderEnd: (e, gestureState)=>{
+                if (gestureState.dx>60) {
+                    props.navigation.navigate('Login');
+                }
+            }
+        }) ;
 
         this.state = {
             username: '',
@@ -110,7 +131,8 @@ class RegisterTab extends Component{
             lastname: '',
             email: '',
             remember: false,
-            imageUrl: baseUrl + 'images/logo.png'
+            imageUrl: baseUrl + 'images/logo.png',
+            panResponder:panResponder
         }
     }
     handleRegister() {
@@ -123,6 +145,7 @@ class RegisterTab extends Component{
     getImageFromCamera= async () => {
         const cameraPermission= await Permissions.askAsync(Permissions.CAMERA);
         const cameraRollPermission= await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
         if (cameraPermission.status === 'granted' && cameraRollPermission.status === 'granted') {
 
             let capturedImage = await ImagePicker.launchCameraAsync({
@@ -135,13 +158,12 @@ class RegisterTab extends Component{
                 this.setState({imageUrl: capturedImage.uri});
             }
         }
-    }
     };
 
     render() {
         return(
-            <ScrollView>
-                <View style={styles.container}>
+            <ScrollView >
+                <Animatable.View animation={'slideInLeft'} style={styles.container} {...this.state.panResponder.panHandlers}>
                     <View style={styles.imageContainer}>
                         <Image source={{uri:this.state.imageUrl}} loadingIndicatorSource={require('../assets/images/logo.png')} style={styles.image}/>
                         <Button title={'Camera'} onPress={this.getImageFromCamera} />
@@ -205,7 +227,7 @@ class RegisterTab extends Component{
                             }}
                         />
                     </View>
-                </View>
+                </Animatable.View>
             </ScrollView>
         )
     }
