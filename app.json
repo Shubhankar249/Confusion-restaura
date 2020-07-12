@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "confusion",
+    "icon": "./assets/images/icon.png",
     "slug": "confusion",
     "platforms": [
       "ios",
@@ -17,6 +18,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "net.food.confusion.confusion",
+      "versionCode": 1
     }
   }
 }

@@ -5,6 +5,8 @@ import * as Animatable from 'react-native-animatable';
 import * as Permissions from 'expo-permissions';
 import {Notifications} from "expo";
 import {max, min} from "react-native-reanimated";
+import * as Calendar from 'expo-calendar';
+import {getDefaultCalendarAsync} from "expo-calendar";
 
 
 class Reservation extends Component {
@@ -38,7 +40,7 @@ class Reservation extends Component {
     }
 
 
-async presentLocalNotification(date) {
+    async presentLocalNotification(date) {
         await this.obtainNotificationPermission();
 
         Notifications.presentLocalNotificationAsync({
@@ -60,6 +62,59 @@ async presentLocalNotification(date) {
                 priority:max
             });
         }
+    }
+
+    async obtainCalendarPermission() {
+        let permission = await Permissions.getAsync(Permissions.CALENDAR);
+        if (permission.status !== 'granted') {
+            permission = await Permissions.askAsync(Permissions.CALENDAR);
+
+            if (permission.status !== 'granted') Alert.alert('Permission not granted for Calendar usage');
+        }
+        return permission;
+    }
+
+    async createCalendar() {
+        const defaultCalendarSource =
+            Platform.OS === 'ios'
+                ? await this.getDefaultCalendar()
+                : { isLocalAccount: true, name: 'Expo Calendar' };
+        const newCalendarID = await Calendar.createCalendarAsync({
+            title: 'Expo Calendar',
+            color: 'blue',
+            entityType: Calendar.EntityTypes.EVENT,
+            sourceId: defaultCalendarSource.id,
+            source: defaultCalendarSource,
+            name: 'internalCalendarName',
+            ownerAccount: 'personal',
+            accessLevel: Calendar.CalendarAccessLevel.OWNER,
+        });
+        console.log(`Your new calendar ID is: ${newCalendarID}`);
+        return newCalendarID;
+    }
+
+    async getDefaultCalendar() {
+        const cal=await Calendar.getCalendarsAsync();
+        const defaultCal=cal.filter(each => each.source.name === 'Default');
+        return defaultCal[0].source;
+    }
+
+    async addReservationToCalendar(date) {
+        await this.obtainCalendarPermission();
+        const calId=await this.createCalendar();
+
+        let eDate=new Date(Date.parse(date));
+        eDate.setHours(eDate.getHours()+2);
+
+        console.log(eDate);
+        await Calendar.createEventAsync(calId, {
+            title:'Con Fusion Reservation',
+            startDate: new Date(Date.parse(date)),
+            endDate: eDate,
+            allDay: false,
+            timeZone:'Asia/Kolkata',
+            location: 'Awesome Street in a cool block'
+        })
     }
 
     render() {
@@ -103,7 +158,10 @@ async presentLocalNotification(date) {
                             },
                             {
                                 text:'OK',
-                                onPress: ()=>{this.presentLocalNotification(this.state.date);this.resetForm()}
+                                onPress: ()=>{
+                                    this.presentLocalNotification(this.state.date);
+                                    this.addReservationToCalendar(this.state.date);
+                                    this.resetForm()}
                             }
                         ],
                         {cancelable:false}
